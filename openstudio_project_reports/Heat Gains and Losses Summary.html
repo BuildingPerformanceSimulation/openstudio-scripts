@@ -48,16 +48,16 @@
         <td>{{ run.zone_people_sensible_heating_energy_annual | number:1}}</td>
         <td>{{ run.zone_infiltration_sensible_heat_gain_energy_annual | number:1}}</td>
         <td>{{ run.surface_window_heat_gain_energy_annual | number:1}}</td>
-        <td>{{ run.monthly_ext_wall_heat_gain | number:1}}</td>
-        <td>{{ run.monthly_ext_roof_heat_gain | number:1}}</td>
-        <td>{{ run.monthly_ground_heat_gain | number:1}}</td>
-        <td>{{ run.monthly_surface_heat_gain | number:1}}</td>
+        <td>{{ run.ext_wall_heat_gain | number:1}}</td>
+        <td>{{ run.ext_roof_heat_gain | number:1}}</td>
+        <td>{{ run.ground_heat_gain | number:1}}</td>
+        <td>{{ run.surface_heat_gain | number:1}}</td>
         <td>{{ run.zone_infiltration_sensible_heat_loss_energy_annual | number:1}}</td>
         <td>{{ run.surface_window_heat_loss_energy_annual | number:1}}</td>
-        <td>{{ run.monthly_ext_wall_heat_loss | number:1}}</td>
-        <td>{{ run.monthly_ext_roof_heat_loss | number:1}}</td>
-        <td>{{ run.monthly_ground_heat_loss | number:1}}</td>
-        <td>{{ run.monthly_surface_heat_loss | number:1}}</td>
+        <td>{{ run.ext_wall_heat_loss | number:1}}</td>
+        <td>{{ run.ext_roof_heat_loss | number:1}}</td>
+        <td>{{ run.ground_heat_loss | number:1}}</td>
+        <td>{{ run.surface_heat_loss | number:1}}</td>
       </tr>
     </table>
   </div>
@@ -110,8 +110,16 @@
         // Set the energy results properties of each run
         _.forEach($scope.results, function (run) {
 
-          // Get the Envelope and Internal Load Breakdown measure, which contains the results
-          var reportMeasure = _.find(run.steps, {'measure_id': "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02"});
+          // Get the OpenStudio Results measure, which contains the results
+          var reportMeasure = null;
+          _(run.steps).forEach(function (step) {
+            if (step.hasOwnProperty('result')) {
+              if (step.result.measure_uid == "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02") {
+                reportMeasure = step;
+              }
+            }
+          });
+
           if (!reportMeasure) {
             renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
             return;
@@ -136,7 +144,6 @@
             return;
           }
 
-
           // setup names
           run.electric_equipment_total_heating_energy_annual = _.find(vals, {'name': "electric_equipment_total_heating_energy_annual"}).value;
           run.gas_equipment_total_heating_energy_annual = _.find(vals, {'name': "gas_equipment_total_heating_energy_annual"}).value;
@@ -144,16 +151,16 @@
           run.zone_people_sensible_heating_energy_annual = _.find(vals, {'name': "zone_people_sensible_heating_energy_annual"}).value;
           run.zone_infiltration_sensible_heat_gain_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_gain_energy_annual"}).value;
           run.surface_window_heat_gain_energy_annual = _.find(vals, {'name': "surface_window_heat_gain_energy_annual"}).value;
-          run.monthly_ext_wall_heat_gain = _.find(vals, {'name': "monthly_ext_wall_heat_gain"}).value;
-          run.monthly_ext_roof_heat_gain = _.find(vals, {'name': "monthly_ext_roof_heat_gain"}).value;
-          run.monthly_ground_heat_gain = _.find(vals, {'name': "monthly_ground_heat_gain"}).value;
-          run.monthly_surface_heat_gain = _.find(vals, {'name': "monthly_surface_heat_gain"}).value;
+          run.ext_wall_heat_gain = _.find(vals, {'name': "ext_wall_heat_gain"}).value;
+          run.ext_roof_heat_gain = _.find(vals, {'name': "ext_roof_heat_gain"}).value;
+          run.ground_heat_gain = _.find(vals, {'name': "ground_heat_gain"}).value;
+          run.surface_heat_gain = _.find(vals, {'name': "surface_heat_gain"}).value;
           run.zone_infiltration_sensible_heat_loss_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_loss_energy_annual"}).value;
           run.surface_window_heat_loss_energy_annual = _.find(vals, {'name': "surface_window_heat_loss_energy_annual"}).value;
-          run.monthly_ext_wall_heat_loss = _.find(vals, {'name': "monthly_ext_wall_heat_loss"}).value;
-          run.monthly_ext_roof_heat_loss = _.find(vals, {'name': "monthly_ext_roof_heat_loss"}).value;
-          run.monthly_ground_heat_loss = _.find(vals, {'name': "monthly_ground_heat_loss"}).value;
-          run.monthly_surface_heat_loss = _.find(vals, {'name': "monthly_surface_heat_loss"}).value;
+          run.ext_wall_heat_loss = _.find(vals, {'name': "ext_wall_heat_loss"}).value;
+          run.ext_roof_heat_loss = _.find(vals, {'name': "ext_roof_heat_loss"}).value;
+          run.ground_heat_loss = _.find(vals, {'name': "ground_heat_loss"}).value;
+          run.surface_heat_loss = _.find(vals, {'name': "surface_heat_loss"}).value;
 
 
           console.log(run.name);
