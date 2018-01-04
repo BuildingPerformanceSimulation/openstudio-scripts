@@ -84,7 +84,7 @@
 
       // todo - sort by building type, then climate zone, then template, then group by scenario
       // todo - aggregate results by scenario set in separate charts
-      var datapoints = []; // todo - to be removed
+      //var datapoints = []; // todo - to be removed
       var scenarioData = [];
       var building_types = [];
       var climate_zones = [];
@@ -160,7 +160,7 @@
         };
 
         // pushing run to datapoints. will be replaced by an array of arrays
-        datapoints.push(run);
+        //datapoints.push(run);
 
         data['run'] = run;
         scenarioData.push(data);
@@ -173,7 +173,7 @@
       templates.sort();
       scenarios.sort();
 
-      // todo - populate array of array's
+      // populate array of array's
       var structured_datpoints = [];
 
       // loop through combinations of variables, and then find datapoints matching each one
@@ -191,11 +191,9 @@
 
                 // nested if statements to check datapoint
                 if(JSON.stringify(datapoint['building_type']) === JSON.stringify(building_type)) {
-
-                   if(datapoint['climate_zone'] == climate_zone){
-                    if(datapoint['template'] == template){
-                      if(datapoint['scenario'] == scenario){
-
+                  if(JSON.stringify(datapoint['climate_zone']) === JSON.stringify(climate_zone)) {
+                    if(JSON.stringify(datapoint['template']) === JSON.stringify(template)) {
+                      if(JSON.stringify(datapoint['scenario']) === JSON.stringify(scenario)) {
                         scenario_group.push(datapoint['run']);
                       };
                     };
@@ -221,146 +219,73 @@
       renderWarns.push(scenarios);
       //renderWarns.push(structured_datpoints[0].length);
 
+      // arrays of arrays to pass to method that generates charts
+      var newDataCollections = [];
+
       // loop through scenario groups
-      _.forEach(structured_datpoints, function (scenario_group) {
+      _.forEach(structured_datpoints, function (datapoints) {
 
+        // Populate arrays of data for electricity and gas by end use
+        var chart_types = ['end_use_electricity_', 'end_use_natural_gas_', 'end_use_', 'heat_gain', 'heat_loss'];
+        _.forEach(chart_types, function (chart_type) {
 
+          var newData = [];
+          var newDataGain = [];
+          var newDataLoss = [];
 
-      });
+          // different logic to add data for end use breakdown charts vs. heat gain/loss charts
+          if(chart_type.indexOf('end_use_') >= 0){
 
-      // Populate arrays of data for electricity and gas by end use
-      var chart_types = ['end_use_electricity_', 'end_use_natural_gas_', 'end_use_', 'heat_gain', 'heat_loss'];
-      _.forEach(chart_types, function (chart_type) {
+            _.forEach(datapoints, function (run) {
 
-        var newData = [];
-        var newDataGain = [];
-        var newDataLoss = [];
-
-        // different logic to add data for end use breakdown charts vs. heat gain/loss charts
-        if(chart_type.indexOf('end_use_') >= 0){
-
-          _.forEach(datapoints, function (run) {
-
-            // Get the OpenStudio Results measure, which contains the results
-            var reportMeasure = null;
-            _(run.steps).forEach(function (step) {
-              if (step.hasOwnProperty('result')) {
-                if (step.result.measure_uid == "a25386cd-60e4-46bc-8b11-c755f379d916") {
-                  reportMeasure = step;
+              // Get the OpenStudio Results measure, which contains the results
+              var reportMeasure = null;
+              _(run.steps).forEach(function (step) {
+                if (step.hasOwnProperty('result')) {
+                  if (step.result.measure_uid == "a25386cd-60e4-46bc-8b11-c755f379d916") {
+                    reportMeasure = step;
+                  }
                 }
+              });
+              if (!reportMeasure) {
+                renderWarns.push("The OpenStudio Results measure was not included in " + run.name + ", cannot show results.");
+                return;
               }
-            });
-            if (!reportMeasure) {
-              renderWarns.push("The OpenStudio Results measure was not included in " + run.name + ", cannot show results.");
-              return;
-            }
 
-            // Make sure the results exist
-            if (!reportMeasure.hasOwnProperty('result')){
-              renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            // Make sure the results have data
-            var vals = reportMeasure.result.step_values;
-            if (vals.length == 0){
-              renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            // Make sure the EUI element exists to ensure measure was run
-            if (!_.find(vals, {'name': "eui"})) {
-              renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            var DataKeys = [
-              "Heating",
-              "Cooling",
-              "Interior Lighting",
-              "Exterior Lighting",
-              "Interior Equipment",
-              "Exterior Equipment",
-              "Fans",
-              "Pumps",
-              "Heat Rejection",
-              "Humidification",
-              "Heat Recovery",
-              "Water Systems",
-              "Refrigeration",
-              "Generators"
-            ]
-
-            // Populate an object with the end use data
-            var data = {};
-            data.name = run.name;
-            var tot = 0.0;
-            _.forEach(DataKeys, function (key) {
-              // Define the data header
-              var header = key.toLowerCase().replace(' ', '_');
-              var lookup = chart_type + header;
-              var val = _.find(vals, {'name': lookup}).value;
-              data[header] = val;
-              tot += val;
-            });
-            data.total = tot;
-
-            newData.push(data);
-
-          });
-
-        } else {
-
-          // Set the energy results properties of each run
-          _.forEach(datapoints, function (run) {
-
-            // Get the Envelope and Internal Load Breakdown measure results
-            var gainLossMeasure = null;
-            _(run.steps).forEach(function (step) {
-              if (step.hasOwnProperty('result')) {
-                if (step.result.measure_uid == "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02") {
-                  gainLossMeasure = step;
-                }
+              // Make sure the results exist
+              if (!reportMeasure.hasOwnProperty('result')){
+                renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
+                return;
               }
-            });
 
-            if (!gainLossMeasure) {
-              renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
-              return;
-            }
+              // Make sure the results have data
+              var vals = reportMeasure.result.step_values;
+              if (vals.length == 0){
+                renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
+                return;
+              }
 
-            // Make sure the results exist
-            if (!gainLossMeasure.hasOwnProperty('result')){
-              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            // Make sure the results have data
-            var vals = gainLossMeasure.result.step_values;
-            if (vals.length == 0){
-              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            // Make sure the element exists to ensure measure was run
-            if (!_.find(vals, {'name': "electric_equipment_total_heating_energy_annual"})) {
-              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-              return;
-            }
-
-            // break heat gains and losses apart
-            if (chart_type.indexOf('heat_gain') >= 0) {
+              // Make sure the EUI element exists to ensure measure was run
+              if (!_.find(vals, {'name': "eui"})) {
+                renderWarns.push("The OpenStudio Results measure was not run in " + run.name + ", cannot show results.");
+                return;
+              }
 
               var DataKeys = [
-                "zone_lights_total_heating_energy_annual",
-                "electric_equipment_total_heating_energy_annual",
-                "gas_equipment_total_heating_energy_annual",
-                "zone_people_sensible_heating_energy_annual",
-                "zone_infiltration_sensible_heat_gain_energy_annual",
-                "ground_heat_gain",
-                "ext_wall_heat_gain",
-                "surface_window_heat_gain_energy_annual",
-                "ext_roof_heat_gain"
+                "Heating",
+                "Cooling",
+                "Interior Lighting",
+                "Exterior Lighting",
+                "Interior Equipment",
+                "Exterior Equipment",
+                "Fans",
+                "Pumps",
+                "Heat Rejection",
+                "Humidification",
+                "Heat Recovery",
+                "Water Systems",
+                "Refrigeration",
+                "Generators"
               ]
 
               // Populate an object with the end use data
@@ -368,67 +293,141 @@
               data.name = run.name;
               var tot = 0.0;
               _.forEach(DataKeys, function (key) {
+                // Define the data header
                 var header = key.toLowerCase().replace(' ', '_');
-                var val = _.find(vals, {'name': header}).value;
+                var lookup = chart_type + header;
+                var val = _.find(vals, {'name': lookup}).value;
                 data[header] = val;
                 tot += val;
               });
               data.total = tot;
 
-              newDataGain.push(data);
+              newData.push(data);
 
-            } else {
+            });
 
-              var DataKeys = [
+          } else {
 
-                "ext_roof_heat_loss",
-                "surface_window_heat_loss_energy_annual",
-                "ext_wall_heat_loss",
-                "ground_heat_loss",
-                "zone_infiltration_sensible_heat_loss_energy_annual"
-              ]
+            // Set the energy results properties of each run
+            _.forEach(datapoints, function (run) {
 
-              // Populate an object with the end use data
-              var data = {};
-              data.name = run.name;
-              var tot = 0.0;
-              _.forEach(DataKeys, function (key) {
-                var header = key.toLowerCase().replace(' ', '_');
-                var val = _.find(vals, {'name': header}).value;
-                data[header] = val;
-                tot += val;
+              // Get the Envelope and Internal Load Breakdown measure results
+              var gainLossMeasure = null;
+              _(run.steps).forEach(function (step) {
+                if (step.hasOwnProperty('result')) {
+                  if (step.result.measure_uid == "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02") {
+                    gainLossMeasure = step;
+                  }
+                }
               });
-              data.total = tot;
 
-              newDataLoss.push(data);
+              if (!gainLossMeasure) {
+                renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
+                return;
+              }
 
-            }
+              // Make sure the results exist
+              if (!gainLossMeasure.hasOwnProperty('result')){
+                renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+                return;
+              }
 
-          });
+              // Make sure the results have data
+              var vals = gainLossMeasure.result.step_values;
+              if (vals.length == 0){
+                renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+                return;
+              }
 
-        }
+              // Make sure the element exists to ensure measure was run
+              if (!_.find(vals, {'name': "electric_equipment_total_heating_energy_annual"})) {
+                renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+                return;
+              }
 
-        // Add this datapoint to the overall set
-        switch (chart_type){
-          case 'end_use_electricity_':
-            $scope.elecEndUseData = newData;
-            // diagnostic code for inspecting newData in PAT
-            //$scope.renderWarns.push(chart_type + " " + Object.keys(newData[0]).length + " " + JSON.stringify(newData, null, 3));
+              // break heat gains and losses apart
+              if (chart_type.indexOf('heat_gain') >= 0) {
 
-          case 'end_use_natural_gas_':
-            $scope.gasEndUseData = newData;
+                var DataKeys = [
+                  "zone_lights_total_heating_energy_annual",
+                  "electric_equipment_total_heating_energy_annual",
+                  "gas_equipment_total_heating_energy_annual",
+                  "zone_people_sensible_heating_energy_annual",
+                  "zone_infiltration_sensible_heat_gain_energy_annual",
+                  "ground_heat_gain",
+                  "ext_wall_heat_gain",
+                  "surface_window_heat_gain_energy_annual",
+                  "ext_roof_heat_gain"
+                ]
 
-          // only want to catch things that start with end_use_ but not followed by "electricity" or "natural_gas"
-          case 'end_use_':
-            $scope.endUseData = newData;
+                // Populate an object with the end use data
+                var data = {};
+                data.name = run.name;
+                var tot = 0.0;
+                _.forEach(DataKeys, function (key) {
+                  var header = key.toLowerCase().replace(' ', '_');
+                  var val = _.find(vals, {'name': header}).value;
+                  data[header] = val;
+                  tot += val;
+                });
+                data.total = tot;
 
-          case 'heat_gain':
-            $scope.heatGain = newDataGain;
+                newDataGain.push(data);
 
-          case 'heat_loss':
-            $scope.heatLoss = newDataLoss;
-        }
+              } else {
 
+                var DataKeys = [
+
+                  "ext_roof_heat_loss",
+                  "surface_window_heat_loss_energy_annual",
+                  "ext_wall_heat_loss",
+                  "ground_heat_loss",
+                  "zone_infiltration_sensible_heat_loss_energy_annual"
+                ]
+
+                // Populate an object with the end use data
+                var data = {};
+                data.name = run.name;
+                var tot = 0.0;
+                _.forEach(DataKeys, function (key) {
+                  var header = key.toLowerCase().replace(' ', '_');
+                  var val = _.find(vals, {'name': header}).value;
+                  data[header] = val;
+                  tot += val;
+                });
+                data.total = tot;
+
+                newDataLoss.push(data);
+
+              }
+
+            });
+
+          }
+
+          // Add this datapoint to the overall set
+          switch (chart_type){
+            case 'end_use_electricity_':
+              $scope.elecEndUseData = newData;
+                  // diagnostic code for inspecting newData in PAT
+                  //$scope.renderWarns.push(chart_type + " " + Object.keys(newData[0]).length + " " + JSON.stringify(newData, null, 3));
+
+            case 'end_use_natural_gas_':
+              $scope.gasEndUseData = newData;
+
+                  // only want to catch things that start with end_use_ but not followed by "electricity" or "natural_gas"
+            case 'end_use_':
+              $scope.endUseData = newData;
+
+            case 'heat_gain':
+              $scope.heatGain = newDataGain;
+
+            case 'heat_loss':
+              $scope.heatLoss = newDataLoss;
+          }
+
+
+        });
 
       });
 
