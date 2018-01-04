@@ -23,33 +23,28 @@
       <li class="alert alert-warning" ng-repeat="warn in renderWarns">{{ warn }}</li>
     </ul>
 
-    <h2>Electricity Consumption (kWh)</h2>
-
-    <div style="height: 500px;">
-      <d3ng-stackedenduse data="elecEndUseData"></d3ng-stackedenduse>
-    </div>
-
-    <h2>Natural Gas Consumption (therms)</h2>
-
-    <div style="height: 500px;">
-      <d3ng-stackedenduse data="gasEndUseData"></d3ng-stackedenduse>
-    </div>
 
     <h2>End Use Across Fuels (kBtu)</h2>
-
-    <div style="height: 500px;">
-      <d3ng-stackedenduse data="endUseData"></d3ng-stackedenduse>
+    <div ng-repeat="e in endUseData">
+      <div style="height: 500px;">
+        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+      </div>
     </div>
 
     <h2>Heat Gain Annual Breakdown by Building Component (kBtu)</h2>
-    <div style="height: 500px;">
-      <d3ng-stackedenduse data="heatGain"></d3ng-stackedenduse>
+    <div ng-repeat="e in heatGain">
+      <div style="height: 500px;">
+        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+      </div>
     </div>
 
-    <h2>Heat Loss Annual Breakdown by Building Component (kBtu)</h2>
-    <div style="height: 500px;">
-      <d3ng-stackedenduse data="heatLoss"></d3ng-stackedenduse>
+      <h2>Heat Loss Annual Breakdown by Building Component (kBtu)</h2>
+    <div ng-repeat="e in heatLoss">
+      <div style="height: 500px;">
+        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+      </div>
     </div>
+
 
   </div>
 
@@ -446,11 +441,11 @@
 
       // todo - remove temp code that only passes first of each array out
       var datapoint_group_to_chart = 0;
-      $scope.elecEndUseData = $scope.elecEndUseData[datapoint_group_to_chart];
-      $scope.gasEndUseData = $scope.gasEndUseData[datapoint_group_to_chart];
-      $scope.endUseData = $scope.endUseData[datapoint_group_to_chart];
-      $scope.heatGain = $scope.heatGain[datapoint_group_to_chart];
-      $scope.heatLoss = $scope.heatLoss[datapoint_group_to_chart];
+      //$scope.elecEndUseData = $scope.elecEndUseData[datapoint_group_to_chart];
+      //$scope.gasEndUseData = $scope.gasEndUseData[datapoint_group_to_chart];
+      //$scope.endUseData = $scope.endUseData[datapoint_group_to_chart];
+      //$scope.heatGain = $scope.heatGain[datapoint_group_to_chart];
+      //$scope.heatLoss = $scope.heatLoss[datapoint_group_to_chart];
 
       //renderWarns.push($scope.heatLoss.length);
       //renderWarns.push($scope.heatLoss[0].length);
