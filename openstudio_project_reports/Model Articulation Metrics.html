@@ -84,8 +84,13 @@
 
       // todo - sort by building type, then climate zone, then template, then group by scenario
       // todo - aggregate results by scenario set in separate charts
-      var scenarioData = []
-      var datapoints = [];
+      var datapoints = []; // todo - to be removed
+      var scenarioData = [];
+      var building_types = [];
+      var climate_zones = [];
+      var templates = [];
+      var scenarios = [];
+
       _.forEach($scope.results, function (run) {
 
         // Get the scenario measure, which contains the results
@@ -139,10 +144,87 @@
 
         // update display name of datapoint
         run.name = data["building_type"] + " " + data["climate_zone"].replace('ASHRAE 169-2006-', '') + " " + data["template"] + " " + data["scenario"]
+
+        // populate variable arrays
+        if(building_types.indexOf(data["building_type"]) == -1){
+          building_types.push(data["building_type"])
+        };
+        if(climate_zones.indexOf(data["climate_zone"]) == -1){
+          climate_zones.push(data["climate_zone"])
+        };
+        if(templates.indexOf(data["template"]) == -1){
+          templates.push(data["template"])
+        };
+        if(scenarios.indexOf(data["scenario"]) == -1){
+          scenarios.push(data["scenario"])
+        };
+
+        // pushing run to datapoints. will be replaced by an array of arrays
         datapoints.push(run);
 
-        // not used
+        data['run'] = run;
         scenarioData.push(data);
+
+      });
+
+      // sort arrays
+      building_types.sort();
+      climate_zones.sort();
+      templates.sort();
+      scenarios.sort();
+
+      // todo - populate array of array's
+      var structured_datpoints = [];
+
+      // loop through combinations of variables, and then find datapoints matching each one
+      _.forEach(building_types, function (building_type) {
+        _.forEach(climate_zones, function (climate_zone) {
+          _.forEach(templates, function (template) {
+
+            var scenario_group = [];
+
+            // get scenarios for the group
+            _.forEach(scenarios, function (scenario) {
+
+              // loop through datapoints
+              _.forEach(scenarioData, function (datapoint) {
+
+                // nested if statements to check datapoint
+                if(JSON.stringify(datapoint['building_type']) === JSON.stringify(building_type)) {
+
+                   if(datapoint['climate_zone'] == climate_zone){
+                    if(datapoint['template'] == template){
+                      if(datapoint['scenario'] == scenario){
+
+                        scenario_group.push(datapoint['run']);
+                      };
+                    };
+                  };
+
+                };
+
+              });
+
+            });
+
+            // push to structured group
+            structured_datpoints.push(scenario_group);
+
+          });
+        });
+      });
+
+      // temp diagnostic reporting
+      renderWarns.push(building_types);
+      renderWarns.push(climate_zones);
+      renderWarns.push(templates);
+      renderWarns.push(scenarios);
+      //renderWarns.push(structured_datpoints[0].length);
+
+      // loop through scenario groups
+      _.forEach(structured_datpoints, function (scenario_group) {
+
+
 
       });
 
@@ -230,7 +312,7 @@
         } else {
 
           // Set the energy results properties of each run
-          _.forEach($scope.results, function (run) {
+          _.forEach(datapoints, function (run) {
 
             // Get the Envelope and Internal Load Breakdown measure results
             var gainLossMeasure = null;
@@ -403,7 +485,7 @@
                   .append("svg")
                   .attr("width", total_width)
                   .attr("height", total_height)
-                  .attr("transform", "rotate(90 250 0)");
+                  .attr("transform", "rotate(90 "+ total_width/2.0 +" 0)");
 
           var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")rotate(0 0 0)");
 
@@ -419,15 +501,11 @@
           if (Object.keys(data[0]).length == 16) {
 
             var z = d3.scaleOrdinal()
-                    .range(["#EF1C21", "#0071BD", "#F7DF10", "#DEC310", "#4A4D4A", "#B5B2B5", "#FF79AD", "#632C94", "#F75921", "#293094", "#CE5921", "#FFB239", "#29AAE7", "#8CC739"]);
+                    .range(["#EF1C21", "#0071BD", "#FF79AD", "#632C94", "#F75921", "#293094", "#CE5921", "#FFB239", "#29AAE7", "#8CC739", "#F7DF10", "#DEC310", "#4A4D4A", "#B5B2B5"]);
 
             var stackKeys = [
               "heating",
               "cooling",
-              "interior_lighting",
-              "exterior_lighting",
-              "interior_equipment",
-              "exterior_equipment",
               "fans",
               "pumps",
               "heat_rejection",
@@ -435,7 +513,11 @@
               "heat_recovery",
               "water_systems",
               "refrigeration",
-              "generators"
+              "generators",
+              "interior_lighting",
+              "exterior_lighting",
+              "interior_equipment",
+              "exterior_equipment"
             ]
 
           } else if (Object.keys(data[0]).length == 11) {
@@ -529,6 +611,7 @@
                   .attr("dy", "0.35em")
                   .attr("text-anchor", "start")
                   .attr("fill", "#000")
+                  .style("font", "6px sans-serif");
 
           var legend = g.selectAll(".legend")
                   .data(stackKeys)
