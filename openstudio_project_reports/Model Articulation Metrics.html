@@ -160,7 +160,7 @@
         };
 
         // pushing run to datapoints. will be replaced by an array of arrays
-        //datapoints.push(run);
+        //datapoints.push(run); // todo - to be removed
 
         data['run'] = run;
         scenarioData.push(data);
@@ -224,6 +224,13 @@
 
       // loop through scenario groups
       _.forEach(structured_datpoints, function (datapoints) {
+
+        // collections for scenario set
+        var elecEndUseDataCollection = [];
+        var gasEndUseDataCollection = [];
+        var endUseDataCollection = [];
+        var heatGainCollection = [];
+        var heatLossCollection = [];
 
         // Populate arrays of data for electricity and gas by end use
         var chart_types = ['end_use_electricity_', 'end_use_natural_gas_', 'end_use_', 'heat_gain', 'heat_loss'];
@@ -408,28 +415,46 @@
           // Add this datapoint to the overall set
           switch (chart_type){
             case 'end_use_electricity_':
-              $scope.elecEndUseData = newData;
+              elecEndUseDataCollection = newData;
                   // diagnostic code for inspecting newData in PAT
                   //$scope.renderWarns.push(chart_type + " " + Object.keys(newData[0]).length + " " + JSON.stringify(newData, null, 3));
 
             case 'end_use_natural_gas_':
-              $scope.gasEndUseData = newData;
+              gasEndUseDataCollection = newData;
 
                   // only want to catch things that start with end_use_ but not followed by "electricity" or "natural_gas"
             case 'end_use_':
-              $scope.endUseData = newData;
+              endUseDataCollection = newData;
 
             case 'heat_gain':
-              $scope.heatGain = newDataGain;
+              heatGainCollection = newDataGain;
 
             case 'heat_loss':
-              $scope.heatLoss = newDataLoss;
+              heatLossCollection = newDataLoss;
           }
-
 
         });
 
+        // roll up collections
+        $scope.elecEndUseData.push(elecEndUseDataCollection);
+        $scope.gasEndUseData.push(gasEndUseDataCollection);
+        $scope.endUseData.push(endUseDataCollection);
+        $scope.heatGain.push(heatGainCollection);
+        $scope.heatLoss.push(heatLossCollection);
+
       });
+
+      // todo - remove temp code that only passes first of each array out
+      var datapoint_group_to_chart = 0;
+      $scope.elecEndUseData = $scope.elecEndUseData[datapoint_group_to_chart];
+      $scope.gasEndUseData = $scope.gasEndUseData[datapoint_group_to_chart];
+      $scope.endUseData = $scope.endUseData[datapoint_group_to_chart];
+      $scope.heatGain = $scope.heatGain[datapoint_group_to_chart];
+      $scope.heatLoss = $scope.heatLoss[datapoint_group_to_chart];
+
+      //renderWarns.push($scope.heatLoss.length);
+      //renderWarns.push($scope.heatLoss[0].length);
+      //renderWarns.push($scope.heatLoss[0][0]);
 
       // Show a unique set of warnings
       _.forEach(_.uniq(renderWarns), function (warn) {
