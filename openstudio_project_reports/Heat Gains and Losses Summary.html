@@ -78,105 +78,263 @@
       // Show any issues
       $scope.renderWarns = [];
 
+      // gather data for Algorithmic analysis
+      var algorithmic = null;
+      var max_plot = 1000;
+      $scope.setupAfterAlgorithmicResultsAvailable = function () {
+        if ( $scope.algorithm_results.length > 0 || $scope.algorithm_metadata.length > 0 ) {
+          algorithmic = true;
+
+          var renderWarns = [];
+
+          // limit datapoints to max_plot (+ 1 used in if statement and -1 message because of empty last object in algorithmic_results
+          if ($scope.algorithm_results.length > max_plot + 1) {
+            renderWarns.push("Ony plotting " + max_plot + " algorhtimic dataopints out of " + ($scope.algorithm_results.length - 1) + ".");
+            $scope.algorithm_results = $scope.algorithm_results.slice(0,max_plot)
+          }
+
+          // Set the energy results properties of each run
+          _.forEach($scope.algorithm_results, function (run) {
+
+            if (run.name === "") {
+              return
+            }
+
+            // warn and skip of datapoint is missing openstudio_results
+            if (!(run.hasOwnProperty('envelope_and_internal_load_breakdown.electric_equipment_total_heating_energy_annual'))){
+              renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
+              return
+            }
+
+            // electric_equipment_total_heating_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.electric_equipment_total_heating_energy_annual')){
+              renderWarns.push("Enable electric_equipment_total_heating_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.electric_equipment_total_heating_energy_annual = run["envelope_and_internal_load_breakdown.electric_equipment_total_heating_energy_annual"];
+            }
+
+            // gas_equipment_total_heating_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.gas_equipment_total_heating_energy_annual')){
+              renderWarns.push("Enable gas_equipment_total_heating_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.gas_equipment_total_heating_energy_annual = run["envelope_and_internal_load_breakdown.gas_equipment_total_heating_energy_annual"];
+            }
+
+            // zone_lights_total_heating_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.zone_lights_total_heating_energy_annual')){
+              renderWarns.push("Enable zone_lights_total_heating_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.zone_lights_total_heating_energy_annual = run["envelope_and_internal_load_breakdown.zone_lights_total_heating_energy_annual"];
+            }
+
+            // zone_people_sensible_heating_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.zone_people_sensible_heating_energy_annual')){
+              renderWarns.push("Enable zone_people_sensible_heating_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.zone_people_sensible_heating_energy_annual = run["envelope_and_internal_load_breakdown.zone_people_sensible_heating_energy_annual"];
+            }
+
+            // zone_infiltration_sensible_heat_gain_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.zone_infiltration_sensible_heat_gain_energy_annual')){
+              renderWarns.push("Enable zone_infiltration_sensible_heat_gain_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.zone_infiltration_sensible_heat_gain_energy_annual = run["envelope_and_internal_load_breakdown.zone_infiltration_sensible_heat_gain_energy_annual"];
+            }
+
+            // surface_window_heat_gain_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.surface_window_heat_gain_energy_annual')){
+              renderWarns.push("Enable surface_window_heat_gain_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.surface_window_heat_gain_energy_annual = run["envelope_and_internal_load_breakdown.surface_window_heat_gain_energy_annual"];
+            }
+
+            // ext_wall_heat_gain
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ext_wall_heat_gain')){
+              renderWarns.push("Enable ext_wall_heat_gain output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ext_wall_heat_gain = run["envelope_and_internal_load_breakdown.ext_wall_heat_gain"];
+            }
+
+            // ext_roof_heat_gain
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ext_roof_heat_gain')){
+              renderWarns.push("Enable ext_roof_heat_gain output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ext_roof_heat_gain = run["envelope_and_internal_load_breakdown.ext_roof_heat_gain"];
+            }
+
+            // ground_heat_gain
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ground_heat_gain')){
+              renderWarns.push("Enable ground_heat_gain output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ground_heat_gain = run["envelope_and_internal_load_breakdown.ground_heat_gain"];
+            }
+
+            // surface_heat_gain
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.surface_heat_gain')){
+              renderWarns.push("Enable surface_heat_gain output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.surface_heat_gain = run["envelope_and_internal_load_breakdown.surface_heat_gain"];
+            }
+
+            // zone_infiltration_sensible_heat_loss_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.zone_infiltration_sensible_heat_loss_energy_annual')){
+              renderWarns.push("Enable zone_infiltration_sensible_heat_loss_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.zone_infiltration_sensible_heat_loss_energy_annual = run["envelope_and_internal_load_breakdown.zone_infiltration_sensible_heat_loss_energy_annual"];
+            }
+
+            // surface_window_heat_loss_energy_annual
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.surface_window_heat_loss_energy_annual')){
+              renderWarns.push("Enable surface_window_heat_loss_energy_annual output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.surface_window_heat_loss_energy_annual = run["envelope_and_internal_load_breakdown.surface_window_heat_loss_energy_annual"];
+            }
+
+            // ext_wall_heat_loss
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ext_wall_heat_loss')){
+              renderWarns.push("Enable ext_wall_heat_loss output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ext_wall_heat_loss = run["envelope_and_internal_load_breakdown.ext_wall_heat_loss"];
+            }
+
+            // ext_roof_heat_loss
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ext_roof_heat_loss')){
+              renderWarns.push("Enable ext_roof_heat_loss output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ext_roof_heat_loss = run["envelope_and_internal_load_breakdown.ext_roof_heat_loss"];
+            }
+
+            // ground_heat_loss
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.ground_heat_loss')){
+              renderWarns.push("Enable ground_heat_loss output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.ground_heat_loss = run["envelope_and_internal_load_breakdown.ground_heat_loss"];
+            }
+
+            // surface_heat_loss
+            if (!run.hasOwnProperty('envelope_and_internal_load_breakdown.surface_heat_loss')){
+              renderWarns.push("Enable surface_heat_loss output variable in Envelope and Internal Load Breakdown measure to populate relevant Column.");
+            } else {
+              run.surface_heat_loss = run["envelope_and_internal_load_breakdown.surface_heat_loss"];
+            }
+
+            console.log(run.name);
+            console.log(run);
+            $scope.resultsWithInfo.push(run);
+
+          });
+
+          // Show a unique set of warnings
+          $scope.renderWarns = _.uniq(renderWarns);
+
+        }
+      };
+
       // Set up some additional data properties after the results
       // are passed in.
       $scope.setupAfterResultsAvailable = function () {
 
-        var renderWarns = [];
+        if (algorithmic) {
+          return;
+        } else {
 
-        // Get the unique measure counts
-        // based on unique name + argument values.
-        var measureCounts = {};
-        var numAlts = 0;
-        _.forEach($scope.results, function (run) {
-          numAlts += 1;
-          _.forEach(run.steps, function (step) {
-            var idPlusArgs = step.measure_id + JSON.stringify(step.arguments);
-            step.idPlusArgs = idPlusArgs;
-            if (measureCounts[idPlusArgs]) {
-              measureCounts[idPlusArgs] += 1;
-            } else {
-              measureCounts[idPlusArgs] = 1;
-            }
-          });
-        });
-        console.info("There are results for " + numAlts + " runs");
+          var renderWarns = [];
 
-        // Set the measure_names property of each run
-        _.forEach($scope.results, function (run) {
-          run.measure_names = measureNames(run, measureCounts, numAlts);
-        });
-
-        // Set the energy results properties of each run
-        _.forEach($scope.results, function (run) {
-
-          // Get the OpenStudio Results measure, which contains the results
-          var reportMeasure = null;
-          _(run.steps).forEach(function (step) {
-            if (step.hasOwnProperty('result')) {
-              if (step.result.measure_uid == "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02") {
-                reportMeasure = step;
+          // Get the unique measure counts
+          // based on unique name + argument values.
+          var measureCounts = {};
+          var numAlts = 0;
+          _.forEach($scope.results, function (run) {
+            numAlts += 1;
+            _.forEach(run.steps, function (step) {
+              var idPlusArgs = step.measure_id + JSON.stringify(step.arguments);
+              step.idPlusArgs = idPlusArgs;
+              if (measureCounts[idPlusArgs]) {
+                measureCounts[idPlusArgs] += 1;
+              } else {
+                measureCounts[idPlusArgs] = 1;
               }
-            }
+            });
+          });
+          console.info("There are results for " + numAlts + " runs");
+
+          // Set the measure_names property of each run
+          _.forEach($scope.results, function (run) {
+            run.measure_names = measureNames(run, measureCounts, numAlts);
           });
 
-          if (!reportMeasure) {
-            renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
-            return;
+          // Set the energy results properties of each run
+          _.forEach($scope.results, function (run) {
+
+            // Get the OpenStudio Results measure, which contains the results
+            var reportMeasure = null;
+            _(run.steps).forEach(function (step) {
+              if (step.hasOwnProperty('result')) {
+                if (step.result.measure_uid == "8f0e1fbb-8bc6-46e5-b6e4-db59177e2c02") {
+                  reportMeasure = step;
+                }
+              }
+            });
+
+            if (!reportMeasure) {
+              renderWarns.push("The Envelope and Internal Load Breakdown measure was not included in " + run.name + ", cannot show results.");
+              return;
+            }
+
+            // Make sure the results exist
+            if (!reportMeasure.hasOwnProperty('result')){
+              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+              return;
+            }
+
+            // Make sure the results have data
+            var vals = reportMeasure.result.step_values;
+            if (vals.length == 0){
+              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+              return;
+            }
+
+            // Make sure the element exists to ensure measure was run
+            if (!_.find(vals, {'name': "electric_equipment_total_heating_energy_annual"})) {
+              renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
+              return;
+            }
+
+            // setup names
+            run.electric_equipment_total_heating_energy_annual = _.find(vals, {'name': "electric_equipment_total_heating_energy_annual"}).value;
+            run.gas_equipment_total_heating_energy_annual = _.find(vals, {'name': "gas_equipment_total_heating_energy_annual"}).value;
+            run.zone_lights_total_heating_energy_annual = _.find(vals, {'name': "zone_lights_total_heating_energy_annual"}).value;
+            run.zone_people_sensible_heating_energy_annual = _.find(vals, {'name': "zone_people_sensible_heating_energy_annual"}).value;
+            run.zone_infiltration_sensible_heat_gain_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_gain_energy_annual"}).value;
+            run.surface_window_heat_gain_energy_annual = _.find(vals, {'name': "surface_window_heat_gain_energy_annual"}).value;
+            run.ext_wall_heat_gain = _.find(vals, {'name': "ext_wall_heat_gain"}).value;
+            run.ext_roof_heat_gain = _.find(vals, {'name': "ext_roof_heat_gain"}).value;
+            run.ground_heat_gain = _.find(vals, {'name': "ground_heat_gain"}).value;
+            run.surface_heat_gain = _.find(vals, {'name': "surface_heat_gain"}).value;
+            run.zone_infiltration_sensible_heat_loss_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_loss_energy_annual"}).value;
+            run.surface_window_heat_loss_energy_annual = _.find(vals, {'name': "surface_window_heat_loss_energy_annual"}).value;
+            run.ext_wall_heat_loss = _.find(vals, {'name': "ext_wall_heat_loss"}).value;
+            run.ext_roof_heat_loss = _.find(vals, {'name': "ext_roof_heat_loss"}).value;
+            run.ground_heat_loss = _.find(vals, {'name': "ground_heat_loss"}).value;
+            run.surface_heat_loss = _.find(vals, {'name': "surface_heat_loss"}).value;
+
+
+            console.log(run.name);
+            console.log(run);
+            $scope.resultsWithInfo.push(run);
+
+          });
+
+          // Make the comparison point the first run to start
+          if ($scope.resultsWithInfo.length > 0) {
+            $scope.baseline = $scope.resultsWithInfo.reverse()[0];
+            $scope.baseline_name = $scope.baseline.name;
           }
 
-          // Make sure the results exist
-          if (!reportMeasure.hasOwnProperty('result')){
-            renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-            return;
-          }
+          // Show a unique set of warnings
+          $scope.renderWarns = _.uniq(renderWarns);
 
-          // Make sure the results have data
-          var vals = reportMeasure.result.step_values;
-          if (vals.length == 0){
-            renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-            return;
-          }
-
-          // Make sure the element exists to ensure measure was run
-          if (!_.find(vals, {'name': "electric_equipment_total_heating_energy_annual"})) {
-            renderWarns.push("The Envelope and Internal Load Breakdown measure was not run in " + run.name + ", cannot show results.");
-            return;
-          }
-
-          // setup names
-          run.electric_equipment_total_heating_energy_annual = _.find(vals, {'name': "electric_equipment_total_heating_energy_annual"}).value;
-          run.gas_equipment_total_heating_energy_annual = _.find(vals, {'name': "gas_equipment_total_heating_energy_annual"}).value;
-          run.zone_lights_total_heating_energy_annual = _.find(vals, {'name': "zone_lights_total_heating_energy_annual"}).value;
-          run.zone_people_sensible_heating_energy_annual = _.find(vals, {'name': "zone_people_sensible_heating_energy_annual"}).value;
-          run.zone_infiltration_sensible_heat_gain_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_gain_energy_annual"}).value;
-          run.surface_window_heat_gain_energy_annual = _.find(vals, {'name': "surface_window_heat_gain_energy_annual"}).value;
-          run.ext_wall_heat_gain = _.find(vals, {'name': "ext_wall_heat_gain"}).value;
-          run.ext_roof_heat_gain = _.find(vals, {'name': "ext_roof_heat_gain"}).value;
-          run.ground_heat_gain = _.find(vals, {'name': "ground_heat_gain"}).value;
-          run.surface_heat_gain = _.find(vals, {'name': "surface_heat_gain"}).value;
-          run.zone_infiltration_sensible_heat_loss_energy_annual = _.find(vals, {'name': "zone_infiltration_sensible_heat_loss_energy_annual"}).value;
-          run.surface_window_heat_loss_energy_annual = _.find(vals, {'name': "surface_window_heat_loss_energy_annual"}).value;
-          run.ext_wall_heat_loss = _.find(vals, {'name': "ext_wall_heat_loss"}).value;
-          run.ext_roof_heat_loss = _.find(vals, {'name': "ext_roof_heat_loss"}).value;
-          run.ground_heat_loss = _.find(vals, {'name': "ground_heat_loss"}).value;
-          run.surface_heat_loss = _.find(vals, {'name': "surface_heat_loss"}).value;
-
-
-          console.log(run.name);
-          console.log(run);
-          $scope.resultsWithInfo.push(run);
-
-        });
-
-        // Make the comparison point the first run to start
-        if ($scope.resultsWithInfo.length > 0) {
-          $scope.baseline = $scope.resultsWithInfo.reverse()[0];
-          $scope.baseline_name = $scope.baseline.name;
         }
-
-        // Show a unique set of warnings
-        $scope.renderWarns = _.uniq(renderWarns);
 
       };
 
@@ -237,6 +395,17 @@
     $scope.$apply(function () {
       $scope.results = data;
       $scope.setupAfterResultsAvailable();
+    });
+  }
+
+  function setAlgorithmicData(metadata, results) {
+    console.log('Setting algorithmic results variable to: ', results);
+    var controllerElement = document.querySelector('div[ng-controller="MyAppCtrl"]');
+    var $scope = angular.element(controllerElement).scope();
+    $scope.$apply(function () {
+      $scope.algorithm_results = results;
+      $scope.algorithm_metadata = metadata;
+      $scope.setupAfterAlgorithmicResultsAvailable();
     });
   }
 
