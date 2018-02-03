@@ -23,28 +23,38 @@
       <li class="alert alert-warning" ng-repeat="warn in renderWarns">{{ warn }}</li>
     </ul>
 
+    <div class="container">
+      <div class="row">
 
-    <h2>End Use Across Fuels (kBtu)</h2>
-    <div ng-repeat="e in endUseData">
-      <div style="height: 500px;">
-        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+        <div class="col-md-4",class="center-div">
+          <h2>End Use (kBtu)</h2>
+          <div ng-repeat="e in endUseData">
+            <div style="height: 500px;">
+              <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h2>Heat Gain (kBtu)</h2>
+          <div ng-repeat="e in heatGain">
+            <div style="height: 500px;">
+              <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h2>Heat Loss (kBtu)</h2>
+          <div ng-repeat="e in heatLoss">
+            <div style="height: 500px;">
+              <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <h2>Heat Gain Annual Breakdown by Building Component (kBtu)</h2>
-    <div ng-repeat="e in heatGain">
-      <div style="height: 500px;">
-        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
-      </div>
-    </div>
-
-      <h2>Heat Loss Annual Breakdown by Building Component (kBtu)</h2>
-    <div ng-repeat="e in heatLoss">
-      <div style="height: 500px;">
-        <d3ng-stackedenduse data="e"></d3ng-stackedenduse>
-      </div>
-    </div>
-
 
   </div>
 
@@ -72,7 +82,7 @@
 
     // gather data for Algorithmic analysis
     var algorithmic = null;
-    var max_plot = 1000;
+    var max_plot = 10000;
     $scope.setupAfterAlgorithmicResultsAvailable = function () {
       if ( $scope.algorithm_results.length > 0 || $scope.algorithm_metadata.length > 0 ) {
         algorithmic = true;
@@ -128,7 +138,7 @@
 
           // Populate an object with the end use data
           var data = {};
-          data.name = run.name;
+          data.name = run;
           _.forEach(ScenarioKeys, function (key) {
             var header = key.toLowerCase().replace(' ', '_');
             var val = run["openstudio_model_articulation_testing_scenario_builder." + header]
@@ -320,7 +330,7 @@
 
                   // Populate an object with the end use data
                   var data = {};
-                  data.name = run.name;
+                  data.name = run["openstudio_model_articulation_testing_scenario_builder.scenario"];
                   var tot = 0.0;
                   _.forEach(DataKeys, function (key) {
                     var header = key.toLowerCase().replace(' ', '_');
@@ -345,7 +355,7 @@
 
                   // Populate an object with the end use data
                   var data = {};
-                  data.name = run.name;
+                  data.name = run["openstudio_model_articulation_testing_scenario_builder.scenario"];
                   var tot = 0.0;
                   _.forEach(DataKeys, function (key) {
                     var header = key.toLowerCase().replace(' ', '_');
@@ -788,9 +798,9 @@
 
     // constants
     var total_width = 500;
-    var total_height = 960;
+    var total_height = 760;
 
-    var margin = {top: 60, right: 100, bottom: 300, left: 50},
+    var margin = {top: 100, right: 100, bottom: 300, left: 50},
             width = total_width - margin.left - margin.right,
             height = total_height - margin.top - margin.bottom;
 
@@ -819,7 +829,7 @@
                   .append("svg")
                   .attr("width", total_width)
                   .attr("height", total_height)
-                  .attr("transform", "rotate(90 "+ total_width/2.0 +" 0)");
+                  .attr("transform", "rotate(90 0 -100)");
 
           var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")rotate(0 0 0)");
 
