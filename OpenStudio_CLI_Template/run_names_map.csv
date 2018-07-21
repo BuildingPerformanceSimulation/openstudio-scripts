@@ -1,0 +1,9 @@
+id,building_type,template,climate_zone
+run1,SecondarySchool,DOE Ref Pre-1980,ASHRAE 169-2006-4A
+run2,SecondarySchool,DOE Ref Pre-1980,ASHRAE 169-2006-5A
+run3,SecondarySchool,90.1-2013,ASHRAE 169-2006-4A
+run4,SecondarySchool,90.1-2013,ASHRAE 169-2006-5A
+run5,PrimarySchool,DOE Ref Pre-1980,ASHRAE 169-2006-4A
+run6,PrimarySchool,DOE Ref Pre-1980,ASHRAE 169-2006-5A
+run7,PrimarySchool,90.1-2013,ASHRAE 169-2006-4A
+run8,PrimarySchool,90.1-2013,ASHRAE 169-2006-5A
