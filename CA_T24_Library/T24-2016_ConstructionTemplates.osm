@@ -1,0 +1,859 @@
+
+OS:Version,
+  {bf09566c-851c-4a0f-b824-55cb99121658}, !- Handle
+  2.3.0;                                  !- Version Identifier
+
+OS:Site,
+  {9ec2e354-3a05-4e50-b0a3-3ad0a8bca1a4}, !- Handle
+  Site 1,                                 !- Name
+  ,                                       !- Latitude {deg}
+  ,                                       !- Longitude {deg}
+  ,                                       !- Time Zone {hr}
+  ,                                       !- Elevation {m}
+  ;                                       !- Terrain
+
+OS:YearDescription,
+  {e11fe2a4-215d-4a54-ac24-7f26a1d01ba4}; !- Handle
+
+OS:ClimateZones,
+  {23ce9ee0-600b-4567-ba32-fd3e19499aca}, !- Handle
+  ,                                       !- Active Institution
+  ,                                       !- Active Year
+  ,                                       !- Climate Zone Institution Name 1
+  ,                                       !- Climate Zone Document Name 1
+  ,                                       !- Climate Zone Document Year 1
+  ,                                       !- Climate Zone Value 1
+  CEC,                                    !- Climate Zone Institution Name 2
+  California Climate Zone Descriptions,   !- Climate Zone Document Name 2
+  1995,                                   !- Climate Zone Document Year 2
+  ;                                       !- Climate Zone Value 2
+
+OS:Building,
+  {3dfe6216-e0d1-4cbd-8e5c-f8203f87475e}, !- Handle
+  Building 1,                             !- Name
+  ,                                       !- Building Sector Type
+  ,                                       !- North Axis {deg}
+  ,                                       !- Nominal Floor to Floor Height {m}
+  ,                                       !- Space Type Name
+  ,                                       !- Default Construction Set Name
+  ;                                       !- Default Schedule Set Name
+
+OS:Facility,
+  {bc64a1ab-823e-4f0f-b84a-c1fcb3cad388}; !- Handle
+
+OS:SimulationControl,
+  {69210ed8-5ef5-49a9-be12-ebd3c6a5dbb8}; !- Handle
+
+OS:Sizing:Parameters,
+  {1c7d11fe-cad2-429c-9205-35b7475098cf}, !- Handle
+  1.25,                                   !- Heating Sizing Factor
+  1.15;                                   !- Cooling Sizing Factor
+
+OS:Timestep,
+  {fa0e9182-c805-4703-9079-611ada00a438}, !- Handle
+  6;                                      !- Number of Timesteps per Hour
+
+OS:ShadowCalculation,
+  {c772ab35-6a48-46c6-b011-8753f39f87c2}, !- Handle
+  20,                                     !- Calculation Frequency
+  15000;                                  !- Maximum Figures in Shadow Overlap Calculations
+
+OS:HeatBalanceAlgorithm,
+  {36e142a9-225b-4ecc-ba6b-6ec589c73c1d}, !- Handle
+  ConductionTransferFunction,             !- Algorithm
+  200;                                    !- Surface Temperature Upper Limit {C}
+
+OS:RunPeriod,
+  {97d824b9-05bb-48fa-8c8f-61d778d629c6}, !- Handle
+  Run Period 1,                           !- Name
+  1,                                      !- Begin Month
+  1,                                      !- Begin Day of Month
+  12,                                     !- End Month
+  31,                                     !- End Day of Month
+  ,                                       !- Use Weather File Holidays and Special Days
+  ,                                       !- Use Weather File Daylight Saving Period
+  ,                                       !- Apply Weekend Holiday Rule
+  ,                                       !- Use Weather File Rain Indicators
+  ,                                       !- Use Weather File Snow Indicators
+  ;                                       !- Number of Times Runperiod to be Repeated
+
+OS:LifeCycleCost:Parameters,
+  {75867715-402d-4c15-bf6d-316accc8ec82}, !- Handle
+  ,                                       !- Analysis Type
+  ,                                       !- Discounting Convention
+  ,                                       !- Inflation Approach
+  ,                                       !- Real Discount Rate
+  ,                                       !- Nominal Discount Rate
+  ,                                       !- Inflation
+  ,                                       !- Base Date Month
+  ,                                       !- Base Date Year
+  ,                                       !- Service Date Month
+  ,                                       !- Service Date Year
+  ;                                       !- Length of Study Period in Years
+
+OS:Construction,
+  {365b733a-1dae-4bdf-b746-aa2f59692ac8}, !- Handle
+  Base_AllCZ_FixedWindowU36,              !- Name
+  ,                                       !- Surface Rendering Name
+  {d2fdf8d4-eb66-4c7d-b914-c1cb747f6799}; !- Layer 1
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {d2fdf8d4-eb66-4c7d-b914-c1cb747f6799}, !- Handle
+  Base_AllCZ_FixedWindowU36 Material,     !- Name
+  2.04417480280085,                       !- U-Factor {W/m2-K}
+  0.25,                                   !- Solar Heat Gain Coefficient
+  0.42;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {7ab9a0e5-e011-4d9e-a993-4cc98e886e54}, !- Handle
+  {d2fdf8d4-eb66-4c7d-b914-c1cb747f6799}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {c62f9679-8244-4472-b4ec-dbb8124b1ddf}, !- Handle
+  {365b733a-1dae-4bdf-b746-aa2f59692ac8}, !- Construction Name
+  ExteriorWindow,                         !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Fixed Window,                           !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
+OS:Construction,
+  {98be9b15-7eae-4985-a3a8-ad46faf3e9e1}, !- Handle
+  MetalFramedWallU069,                    !- Name
+  ,                                       !- Surface Rendering Name
+  {58eec7d0-2603-4b4d-b7e9-a176a528c3ac}, !- Layer 1
+  {4969db5a-8e8e-4df7-b8c0-e5bd45af51bf}, !- Layer 2
+  {326f7986-dbaf-4779-a4fc-dd497c2f02b6}, !- Layer 3
+  {faaec30d-ba15-40bf-a105-acf6e17f5ed2}, !- Layer 4
+  {008a81f8-128a-40b4-b9ae-2f664f263b4c}, !- Layer 5
+  {0b6428f4-b2ba-422d-a6f4-b8275172890e}; !- Layer 6
+
+OS:Material,
+  {58eec7d0-2603-4b4d-b7e9-a176a528c3ac}, !- Handle
+  Stucco - 7/8 in.,                       !- Name
+  MediumRough,                            !- Roughness
+  0.022352,                               !- Thickness {m}
+  0.700947539880412,                      !- Conductivity {W/m-K}
+  1855.09824333832,                       !- Density {kg/m3}
+  837.36,                                 !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {b945a257-9190-4aa1-8830-3d6104528c88}, !- Handle
+  {58eec7d0-2603-4b4d-b7e9-a176a528c3ac}; !- Material Name
+
+OS:Material,
+  {4969db5a-8e8e-4df7-b8c0-e5bd45af51bf}, !- Handle
+  Compliance Insulation R10.06,           !- Name
+  Smooth,                                 !- Roughness
+  0.040781732,                            !- Thickness {m}
+  0.0230187710627394,                     !- Conductivity {W/m-K}
+  16.0184633739601,                       !- Density {kg/m3}
+  1130.436;                               !- Specific Heat {J/kg-K}
+
+OS:StandardsInformation:Material,
+  {cd7c10dd-190b-4fed-8af6-7ee5014eb4d0}, !- Handle
+  {4969db5a-8e8e-4df7-b8c0-e5bd45af51bf}; !- Material Name
+
+OS:Material,
+  {326f7986-dbaf-4779-a4fc-dd497c2f02b6}, !- Handle
+  Compliance Insulation R2.00,            !- Name
+  Smooth,                                 !- Roughness
+  0.00810768,                             !- Thickness {m}
+  0.0230187710627394,                     !- Conductivity {W/m-K}
+  16.0184633739601,                       !- Density {kg/m3}
+  1130.436;                               !- Specific Heat {J/kg-K}
+
+OS:StandardsInformation:Material,
+  {0a2e1d71-5cb1-4839-9e8a-5bb8e04e3df0}, !- Handle
+  {326f7986-dbaf-4779-a4fc-dd497c2f02b6}; !- Material Name
+
+OS:Material,
+  {faaec30d-ba15-40bf-a105-acf6e17f5ed2}, !- Handle
+  Compliance Insulation R0.20,            !- Name
+  Smooth,                                 !- Roughness
+  0.000810768,                            !- Thickness {m}
+  0.0230187710627394,                     !- Conductivity {W/m-K}
+  16.0184633739601,                       !- Density {kg/m3}
+  1130.436;                               !- Specific Heat {J/kg-K}
+
+OS:StandardsInformation:Material,
+  {dc8a0274-b983-4835-b3f3-5581f15b76f1}, !- Handle
+  {faaec30d-ba15-40bf-a105-acf6e17f5ed2}; !- Material Name
+
+OS:Material,
+  {0b6428f4-b2ba-422d-a6f4-b8275172890e}, !- Handle
+  Gypsum Board - 1/2 in.,                 !- Name
+  Smooth,                                 !- Roughness
+  0.0127,                                 !- Thickness {m}
+  0.158656446866265,                      !- Conductivity {W/m-K}
+  640.738534958406,                       !- Density {kg/m3}
+  1130.436,                               !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {ec5e0f18-e30e-4abc-9383-a60e18565a0b}, !- Handle
+  {0b6428f4-b2ba-422d-a6f4-b8275172890e}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {5dffb259-3e77-467e-ba9d-5703bd9ac1c4}, !- Handle
+  {98be9b15-7eae-4985-a3a8-ad46faf3e9e1}; !- Construction Name
+
+OS:Construction,
+  {5986cb08-e327-4887-a10b-12a205b4e0fa}, !- Handle
+  Interior Drop Ceiling,                  !- Name
+  ,                                       !- Surface Rendering Name
+  {48e97c7c-fb67-41b2-8b9f-f73b0c35083c}; !- Layer 1
+
+OS:Material,
+  {48e97c7c-fb67-41b2-8b9f-f73b0c35083c}, !- Handle
+  Acoustic Tile - 3/4 in.,                !- Name
+  MediumRough,                            !- Roughness
+  0.01905,                                !- Thickness {m}
+  0.0576334643901672,                     !- Conductivity {W/m-K}
+  288.332340731283,                       !- Density {kg/m3}
+  795.492,                                !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {638c340b-b976-4109-828b-240e8f06d6e3}, !- Handle
+  {48e97c7c-fb67-41b2-8b9f-f73b0c35083c}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {f67bee14-d8d7-4d2d-82f1-8d9ea0052234}, !- Handle
+  {5986cb08-e327-4887-a10b-12a205b4e0fa}; !- Construction Name
+
+OS:Construction,
+  {ceb79882-2147-49d8-bf4c-4582a2817fb0}, !- Handle
+  Interior Floor,                         !- Name
+  ,                                       !- Surface Rendering Name
+  {d92751ce-2bbe-4338-88d0-ad37d33fdac1}, !- Layer 1
+  {6c9b9cb2-28c1-4faf-bdea-fe3230f2dbc2}, !- Layer 2
+  {b273ac46-5e6c-450e-a0b7-8679dbe940cf}; !- Layer 3
+
+OS:Material,
+  {d92751ce-2bbe-4338-88d0-ad37d33fdac1}, !- Handle
+  Metal Deck - 1/16 in.,                  !- Name
+  MediumRough,                            !- Roughness
+  0.0015875,                              !- Thickness {m}
+  45.3452482589303,                       !- Conductivity {W/m-K}
+  7820.53418843482,                       !- Density {kg/m3}
+  502.416,                                !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {cec36dfe-75b6-4e55-b5eb-f97d7f27dcd8}, !- Handle
+  {d92751ce-2bbe-4338-88d0-ad37d33fdac1}; !- Material Name
+
+OS:Material,
+  {6c9b9cb2-28c1-4faf-bdea-fe3230f2dbc2}, !- Handle
+  Concrete - 140 lb/ft3 - 4 in.,          !- Name
+  Smooth,                                 !- Roughness
+  0.1016,                                 !- Thickness {m}
+  1.95140333633374,                       !- Conductivity {W/m-K}
+  2239.06081041215,                       !- Density {kg/m3}
+  921.096;                                !- Specific Heat {J/kg-K}
+
+OS:StandardsInformation:Material,
+  {1311229f-f4f2-4111-b576-d03dc9f1344d}, !- Handle
+  {6c9b9cb2-28c1-4faf-bdea-fe3230f2dbc2}; !- Material Name
+
+OS:Material,
+  {b273ac46-5e6c-450e-a0b7-8679dbe940cf}, !- Handle
+  Carpet - 3/4 in.,                       !- Name
+  Smooth,                                 !- Roughness
+  0.01905,                                !- Thickness {m}
+  0.0455183217255675,                     !- Conductivity {W/m-K}
+  288.332340731283,                       !- Density {kg/m3}
+  1381.644,                               !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {543e3b46-99ee-4909-9cd8-95340edecc99}, !- Handle
+  {b273ac46-5e6c-450e-a0b7-8679dbe940cf}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {f1fed867-2bd5-4637-a0c2-0b8367172640}, !- Handle
+  {ceb79882-2147-49d8-bf4c-4582a2817fb0}; !- Construction Name
+
+OS:Construction,
+  {73b654c3-98d5-4244-b153-068c2fa9f551}, !- Handle
+  Interior Wall,                          !- Name
+  ,                                       !- Surface Rendering Name
+  {42add4ec-b7f0-4b50-bdfb-5b743cead8d8}, !- Layer 1
+  {008a81f8-128a-40b4-b9ae-2f664f263b4c}, !- Layer 2
+  {42add4ec-b7f0-4b50-bdfb-5b743cead8d8}; !- Layer 3
+
+OS:Material,
+  {42add4ec-b7f0-4b50-bdfb-5b743cead8d8}, !- Handle
+  Gypsum Board - 5/8 in.,                 !- Name
+  MediumRough,                            !- Roughness
+  0.016002,                               !- Thickness {m}
+  0.158656446866265,                      !- Conductivity {W/m-K}
+  640.738534958406,                       !- Density {kg/m3}
+  1130.436,                               !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {5ec78e5e-ab35-4b89-8daf-38c8fbe7a818}, !- Handle
+  {42add4ec-b7f0-4b50-bdfb-5b743cead8d8}; !- Material Name
+
+OS:Material,
+  {008a81f8-128a-40b4-b9ae-2f664f263b4c}, !- Handle
+  Air - Metal Wall Framing - 16 or 24 in. OC, !- Name
+  Smooth,                                 !- Roughness
+  0.1397,                                 !- Thickness {m}
+  1.22016793979183,                       !- Conductivity {W/m-K}
+  1.28147706991681,                       !- Density {kg/m3}
+  1004.832;                               !- Specific Heat {J/kg-K}
+
+OS:StandardsInformation:Material,
+  {7828062f-e9d9-4704-af2e-f0d3495bf142}, !- Handle
+  {008a81f8-128a-40b4-b9ae-2f664f263b4c}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {5bd6b310-2881-4b2c-8f6d-40dbd78bd849}, !- Handle
+  {73b654c3-98d5-4244-b153-068c2fa9f551}; !- Construction Name
+
+OS:Construction,
+  {0c6bc06d-dd5d-4536-bf20-d24ad8de0b9d}, !- Handle
+  FlatNonresWoodFramingAndOtherRoofU049,  !- Name
+  ,                                       !- Surface Rendering Name
+  {a5b5890f-3dff-492a-b882-5282117bf9c3}, !- Layer 1
+  {61640356-3104-4423-b3cc-34ed9c06998e}; !- Layer 2
+
+OS:Material,
+  {a5b5890f-3dff-492a-b882-5282117bf9c3}, !- Handle
+  Metal Standing Seam - 1/16 in.,         !- Name
+  MediumRough,                            !- Roughness
+  0.0015875,                              !- Thickness {m}
+  0.576853864301583,                      !- Conductivity {W/m-K}
+  7820.53418843482,                       !- Density {kg/m3}
+  502.416,                                !- Specific Heat {J/kg-K}
+  0.85,                                   !- Thermal Absorptance
+  0.37,                                   !- Solar Absorptance
+  0.85;                                   !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {11061566-f11d-4ccb-ba22-5a29fcba1737}, !- Handle
+  {a5b5890f-3dff-492a-b882-5282117bf9c3}; !- Material Name
+
+OS:Material,
+  {61640356-3104-4423-b3cc-34ed9c06998e}, !- Handle
+  Compliance Insulation R19.63,           !- Name
+  Smooth,                                 !- Roughness
+  0.07957693,                             !- Thickness {m}
+  0.0230187710627394,                     !- Conductivity {W/m-K}
+  16.0184633739601,                       !- Density {kg/m3}
+  1130.436,                               !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {6b33a616-8aff-487a-a628-19502c9628fb}, !- Handle
+  {61640356-3104-4423-b3cc-34ed9c06998e}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {0b9157eb-3958-4783-b0ac-dbe246619986}, !- Handle
+  {0c6bc06d-dd5d-4536-bf20-d24ad8de0b9d}; !- Construction Name
+
+OS:Rendering:Color,
+  {75fdde61-82af-4104-8f94-65b47d0c750b}, !- Handle
+  Rendering Color 85,                     !- Name
+  211,                                    !- Rendering Red Value
+  211,                                    !- Rendering Green Value
+  211;                                    !- Rendering Blue Value
+
+OS:DefaultConstructionSet,
+  {49de4fa8-e626-480e-a184-f2a415a1153b}, !- Handle
+  T24-2016 CZ6 Metal-Framed Construction Set, !- Name
+  {e77c510f-9fa1-4506-aedc-b831fdcf3b92}, !- Default Exterior Surface Constructions Name
+  {c971c2be-16df-47fc-9133-fa3718ee0e1d}, !- Default Interior Surface Constructions Name
+  {450a14d4-8a3c-4a69-92cb-28a0c7dc6cc0}, !- Default Ground Contact Surface Constructions Name
+  {abd8c27a-b655-4b8e-8059-35d1fd15a123}, !- Default Exterior SubSurface Constructions Name
+  {abcfb39f-6f44-44c6-a19c-cbb9e375b717}, !- Default Interior SubSurface Constructions Name
+  ,                                       !- Interior Partition Construction Name
+  ,                                       !- Space Shading Construction Name
+  ,                                       !- Building Shading Construction Name
+  ;                                       !- Site Shading Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {80efa12b-0e66-4ae7-b0c6-ccf85b8530ea}, !- Handle
+  Default Surface Constructions 1,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  {7608c875-73c6-41b1-903e-7e71ed254b30}, !- Wall Construction Name
+  {b7a1ea26-b20e-4fdd-bb83-dd95e6ddaf92}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {c5842739-c39f-4d2b-9866-e96f0ed19650}, !- Handle
+  Default Surface Constructions 2,        !- Name
+  {ceb79882-2147-49d8-bf4c-4582a2817fb0}, !- Floor Construction Name
+  {73b654c3-98d5-4244-b153-068c2fa9f551}, !- Wall Construction Name
+  {ed292dc0-c288-4950-8ffc-f109a2107260}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {674e316d-50f7-4922-94ce-9c0167513c23}, !- Handle
+  Default Surface Constructions 3,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  ,                                       !- Wall Construction Name
+  ;                                       !- Roof Ceiling Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {57465f73-9693-456e-b929-0e1ef7cea44c}, !- Handle
+  Default Sub Surface Constructions 1,    !- Name
+  {365b733a-1dae-4bdf-b746-aa2f59692ac8}, !- Fixed Window Construction Name
+  {da6f3fd4-ffb4-41d9-9ec8-0923b6b5c5ae}, !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  {a3dc4b25-055b-4468-bd14-09df7f6dbe11}, !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  {03c6b578-2214-44ff-b3a0-055dad97429f}, !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {156105b7-057a-4cf4-8c26-538bc8b39973}, !- Handle
+  Default Sub Surface Constructions 2,    !- Name
+  ,                                       !- Fixed Window Construction Name
+  ,                                       !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  ,                                       !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  ,                                       !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:Construction,
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Handle
+  ExtSlabCarpet 4in ClimateZone 1-8,      !- Name
+  {e1c48c67-1a73-4a15-9b25-184dfea55ef3}, !- Surface Rendering Name
+  {1b3e8ebd-00ee-4740-b88e-b14a26e9b352}, !- Layer 1
+  {113009ad-b724-419b-83b0-1669cf15f878}; !- Layer 2
+
+OS:Rendering:Color,
+  {e1c48c67-1a73-4a15-9b25-184dfea55ef3}, !- Handle
+  Rendering Color 52,                     !- Name
+  255,                                    !- Rendering Red Value
+  182,                                    !- Rendering Green Value
+  193;                                    !- Rendering Blue Value
+
+OS:Material,
+  {1b3e8ebd-00ee-4740-b88e-b14a26e9b352}, !- Handle
+  MAT-CC05 4 HW CONCRETE,                 !- Name
+  Rough,                                  !- Roughness
+  0.1016,                                 !- Thickness {m}
+  1.311,                                  !- Conductivity {W/m-K}
+  2240,                                   !- Density {kg/m3}
+  836.800000000001,                       !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.85,                                   !- Solar Absorptance
+  0.85;                                   !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {74f6c5d1-cf7a-41d3-8767-4fffff3474e5}, !- Handle
+  {1b3e8ebd-00ee-4740-b88e-b14a26e9b352}; !- Material Name
+
+OS:Material:NoMass,
+  {113009ad-b724-419b-83b0-1669cf15f878}, !- Handle
+  CP02 CARPET PAD,                        !- Name
+  Smooth,                                 !- Roughness
+  0.1,                                    !- Thermal Resistance {m2-K/W}
+  0.9,                                    !- Thermal Absorptance
+  0.8,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Material,
+  {52b1929d-bf47-46be-8498-ef0d7d03e3c3}, !- Handle
+  {113009ad-b724-419b-83b0-1669cf15f878}; !- Material Name
+
+OS:StandardsInformation:Construction,
+  {d4a8fcb6-b1da-4329-8e4a-1ad954bedb09}, !- Handle
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Construction Name
+  ExteriorFloor,                          !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ;                                       !- Construction Standard
+
+OS:DefaultConstructionSet,
+  {4055d295-8ddc-43f2-8140-2cb8ae3d7ab8}, !- Handle
+  T24-2016 CZ3 Metal-Framed Construction Set, !- Name
+  {80efa12b-0e66-4ae7-b0c6-ccf85b8530ea}, !- Default Exterior Surface Constructions Name
+  {c5842739-c39f-4d2b-9866-e96f0ed19650}, !- Default Interior Surface Constructions Name
+  {674e316d-50f7-4922-94ce-9c0167513c23}, !- Default Ground Contact Surface Constructions Name
+  {57465f73-9693-456e-b929-0e1ef7cea44c}, !- Default Exterior SubSurface Constructions Name
+  {156105b7-057a-4cf4-8c26-538bc8b39973}, !- Default Interior SubSurface Constructions Name
+  ,                                       !- Interior Partition Construction Name
+  ,                                       !- Space Shading Construction Name
+  ,                                       !- Building Shading Construction Name
+  ;                                       !- Site Shading Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {e77c510f-9fa1-4506-aedc-b831fdcf3b92}, !- Handle
+  Default Surface Constructions 4,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  {98be9b15-7eae-4985-a3a8-ad46faf3e9e1}, !- Wall Construction Name
+  {0c6bc06d-dd5d-4536-bf20-d24ad8de0b9d}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {c971c2be-16df-47fc-9133-fa3718ee0e1d}, !- Handle
+  Default Surface Constructions 5,        !- Name
+  {ceb79882-2147-49d8-bf4c-4582a2817fb0}, !- Floor Construction Name
+  {73b654c3-98d5-4244-b153-068c2fa9f551}, !- Wall Construction Name
+  {ed292dc0-c288-4950-8ffc-f109a2107260}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {450a14d4-8a3c-4a69-92cb-28a0c7dc6cc0}, !- Handle
+  Default Surface Constructions 6,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  ,                                       !- Wall Construction Name
+  ;                                       !- Roof Ceiling Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {abd8c27a-b655-4b8e-8059-35d1fd15a123}, !- Handle
+  Default Sub Surface Constructions 3,    !- Name
+  {365b733a-1dae-4bdf-b746-aa2f59692ac8}, !- Fixed Window Construction Name
+  {da6f3fd4-ffb4-41d9-9ec8-0923b6b5c5ae}, !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  {a3dc4b25-055b-4468-bd14-09df7f6dbe11}, !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  {03c6b578-2214-44ff-b3a0-055dad97429f}, !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {abcfb39f-6f44-44c6-a19c-cbb9e375b717}, !- Handle
+  Default Sub Surface Constructions 4,    !- Name
+  ,                                       !- Fixed Window Construction Name
+  ,                                       !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  ,                                       !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  ,                                       !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:Rendering:Color,
+  {d2e21aca-52fd-48fc-99f3-6d8b769b8575}, !- Handle
+  Rendering Color 246,                    !- Name
+  255,                                    !- Rendering Red Value
+  235,                                    !- Rendering Green Value
+  205;                                    !- Rendering Blue Value
+
+OS:Construction,
+  {ed292dc0-c288-4950-8ffc-f109a2107260}, !- Handle
+  Interior Ceiling,                       !- Name
+  {e76e441d-07d2-4184-be09-f7c2a0a4701a}, !- Surface Rendering Name
+  {b273ac46-5e6c-450e-a0b7-8679dbe940cf}, !- Layer 1
+  {6c9b9cb2-28c1-4faf-bdea-fe3230f2dbc2}, !- Layer 2
+  {d92751ce-2bbe-4338-88d0-ad37d33fdac1}; !- Layer 3
+
+OS:Rendering:Color,
+  {e76e441d-07d2-4184-be09-f7c2a0a4701a}, !- Handle
+  Rendering Color 241,                    !- Name
+  245,                                    !- Rendering Red Value
+  245,                                    !- Rendering Green Value
+  220;                                    !- Rendering Blue Value
+
+OS:StandardsInformation:Construction,
+  {daa302bd-208b-4c17-8d60-0aca4c077a18}, !- Handle
+  {ed292dc0-c288-4950-8ffc-f109a2107260}; !- Construction Name
+
+OS:Rendering:Color,
+  {5b1c4c77-8abd-4789-8c7e-e7bf1139ee58}, !- Handle
+  Rendering Color 243,                    !- Name
+  220,                                    !- Rendering Red Value
+  20,                                     !- Rendering Green Value
+  60;                                     !- Rendering Blue Value
+
+OS:Rendering:Color,
+  {b93ff111-76b7-4d3d-9bc1-0c20ffd5134f}, !- Handle
+  Rendering Color 242,                    !- Name
+  240,                                    !- Rendering Red Value
+  230,                                    !- Rendering Green Value
+  140;                                    !- Rendering Blue Value
+
+OS:Rendering:Color,
+  {d793f915-8ff4-46bc-a844-61d8aab356b9}, !- Handle
+  Rendering Color 245,                    !- Name
+  128,                                    !- Rendering Red Value
+  128,                                    !- Rendering Green Value
+  0;                                      !- Rendering Blue Value
+
+OS:Construction,
+  {7608c875-73c6-41b1-903e-7e71ed254b30}, !- Handle
+  MetalFramedWallU082,                    !- Name
+  ,                                       !- Surface Rendering Name
+  {58eec7d0-2603-4b4d-b7e9-a176a528c3ac}, !- Layer 1
+  {4969db5a-8e8e-4df7-b8c0-e5bd45af51bf}, !- Layer 2
+  {008a81f8-128a-40b4-b9ae-2f664f263b4c}, !- Layer 3
+  {0b6428f4-b2ba-422d-a6f4-b8275172890e}; !- Layer 4
+
+OS:StandardsInformation:Construction,
+  {6709d187-3c01-4095-96d4-7b8ea628e1a1}, !- Handle
+  {7608c875-73c6-41b1-903e-7e71ed254b30}; !- Construction Name
+
+OS:Construction,
+  {b7a1ea26-b20e-4fdd-bb83-dd95e6ddaf92}, !- Handle
+  FlatNonresWoodFramingAndOtherRoofU034,  !- Name
+  ,                                       !- Surface Rendering Name
+  {a5b5890f-3dff-492a-b882-5282117bf9c3}, !- Layer 1
+  {4abea743-6cbf-464e-8301-055e64a389a3}; !- Layer 2
+
+OS:Material,
+  {4abea743-6cbf-464e-8301-055e64a389a3}, !- Handle
+  Compliance Insulation R28.63,           !- Name
+  Smooth,                                 !- Roughness
+  0.11606149,                             !- Thickness {m}
+  0.0230187710627394,                     !- Conductivity {W/m-K}
+  16.0184633739601,                       !- Density {kg/m3}
+  1130.436,                               !- Specific Heat {J/kg-K}
+  0.9,                                    !- Thermal Absorptance
+  0.7,                                    !- Solar Absorptance
+  0.8;                                    !- Visible Absorptance
+
+OS:StandardsInformation:Construction,
+  {301569ad-2b20-44ad-95b3-b6f139dd0658}, !- Handle
+  {b7a1ea26-b20e-4fdd-bb83-dd95e6ddaf92}; !- Construction Name
+
+OS:StandardsInformation:Material,
+  {2f3b938b-a5ce-4d03-85af-c06835729723}, !- Handle
+  {4abea743-6cbf-464e-8301-055e64a389a3}; !- Material Name
+
+OS:DefaultConstructionSet,
+  {fb48b810-af92-4e99-81f1-6c4da8e2f715}, !- Handle
+  T24-2016 CZ7 Metal-Framed Construction Set, !- Name
+  {49e4c895-0f23-4d37-a2a9-25eb7520cf24}, !- Default Exterior Surface Constructions Name
+  {5327ff01-05db-45c5-976a-b0323db91a21}, !- Default Interior Surface Constructions Name
+  {3c7be2bb-23a0-459a-95b7-e7391d34099a}, !- Default Ground Contact Surface Constructions Name
+  {e7ced68d-7d05-49fc-b82d-310f24693a4f}, !- Default Exterior SubSurface Constructions Name
+  {fa6c6490-3386-4b64-b51e-0573dc25ef86}, !- Default Interior SubSurface Constructions Name
+  ,                                       !- Interior Partition Construction Name
+  ,                                       !- Space Shading Construction Name
+  ,                                       !- Building Shading Construction Name
+  ;                                       !- Site Shading Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {49e4c895-0f23-4d37-a2a9-25eb7520cf24}, !- Handle
+  Default Surface Constructions 7,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  {98be9b15-7eae-4985-a3a8-ad46faf3e9e1}, !- Wall Construction Name
+  {0c6bc06d-dd5d-4536-bf20-d24ad8de0b9d}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {5327ff01-05db-45c5-976a-b0323db91a21}, !- Handle
+  Default Surface Constructions 8,        !- Name
+  {ceb79882-2147-49d8-bf4c-4582a2817fb0}, !- Floor Construction Name
+  {73b654c3-98d5-4244-b153-068c2fa9f551}, !- Wall Construction Name
+  {ed292dc0-c288-4950-8ffc-f109a2107260}; !- Roof Ceiling Construction Name
+
+OS:DefaultSurfaceConstructions,
+  {3c7be2bb-23a0-459a-95b7-e7391d34099a}, !- Handle
+  Default Surface Constructions 9,        !- Name
+  {aade4359-7d95-434d-90ee-96d95022be01}, !- Floor Construction Name
+  ,                                       !- Wall Construction Name
+  ;                                       !- Roof Ceiling Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {e7ced68d-7d05-49fc-b82d-310f24693a4f}, !- Handle
+  Default Sub Surface Constructions 5,    !- Name
+  {365b733a-1dae-4bdf-b746-aa2f59692ac8}, !- Fixed Window Construction Name
+  {da6f3fd4-ffb4-41d9-9ec8-0923b6b5c5ae}, !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  {a3dc4b25-055b-4468-bd14-09df7f6dbe11}, !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  {03c6b578-2214-44ff-b3a0-055dad97429f}, !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:DefaultSubSurfaceConstructions,
+  {fa6c6490-3386-4b64-b51e-0573dc25ef86}, !- Handle
+  Default Sub Surface Constructions 6,    !- Name
+  ,                                       !- Fixed Window Construction Name
+  ,                                       !- Operable Window Construction Name
+  ,                                       !- Door Construction Name
+  ,                                       !- Glass Door Construction Name
+  ,                                       !- Overhead Door Construction Name
+  ,                                       !- Skylight Construction Name
+  ,                                       !- Tubular Daylight Dome Construction Name
+  ;                                       !- Tubular Daylight Diffuser Construction Name
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {754cb830-b6b3-4cda-9bce-080785b573ce}, !- Handle
+  Base_AllCZ_OperableWindowU46 Material,  !- Name
+  2.6120011369122,                        !- U-Factor {W/m2-K}
+  0.22,                                   !- Solar Heat Gain Coefficient
+  0.32;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {af346cad-8083-4da1-b7a9-294b066ed23e}, !- Handle
+  {754cb830-b6b3-4cda-9bce-080785b573ce}; !- Material Name
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {aab8448a-213b-4cd0-9aca-c84a808da536}, !- Handle
+  Base_AllCZ_CurtainWallU41 Material,     !- Name
+  2.32808796985653,                       !- U-Factor {W/m2-K}
+  0.26,                                   !- Solar Heat Gain Coefficient
+  0.46;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {d7e65bff-1719-43df-a6f2-b835fe1e818d}, !- Handle
+  {aab8448a-213b-4cd0-9aca-c84a808da536}; !- Material Name
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {98f26f59-261a-40b0-acce-341f742c0279}, !- Handle
+  Base_AllCZ_GlazedDoorsU45 Material,     !- Name
+  2.55521850350107,                       !- U-Factor {W/m2-K}
+  0.23,                                   !- Solar Heat Gain Coefficient
+  0.17;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {d9a02862-c0a1-4b76-a7de-e5e6865f1a22}, !- Handle
+  {98f26f59-261a-40b0-acce-341f742c0279}; !- Material Name
+
+OS:Construction,
+  {da6f3fd4-ffb4-41d9-9ec8-0923b6b5c5ae}, !- Handle
+  Base_AllCZ_OperableWindowU46,           !- Name
+  ,                                       !- Surface Rendering Name
+  {754cb830-b6b3-4cda-9bce-080785b573ce}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {ff412b81-2367-4e86-9f73-d19e78ac44c0}, !- Handle
+  {da6f3fd4-ffb4-41d9-9ec8-0923b6b5c5ae}, !- Construction Name
+  ExteriorWindow,                         !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Operable Window,                        !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
+OS:Construction,
+  {5a5b1bc6-44c9-4d4e-831c-db93cc795289}, !- Handle
+  Base_AllCZ_CurtainWallU41,              !- Name
+  ,                                       !- Surface Rendering Name
+  {aab8448a-213b-4cd0-9aca-c84a808da536}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {da11abcd-5fd3-4480-b306-08bef91dfa19}, !- Handle
+  {5a5b1bc6-44c9-4d4e-831c-db93cc795289}, !- Construction Name
+  ExteriorWall,                           !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Curtain Wall,                           !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
+OS:Construction,
+  {a3dc4b25-055b-4468-bd14-09df7f6dbe11}, !- Handle
+  Base_AllCZ_GlazedDoorsU45,              !- Name
+  ,                                       !- Surface Rendering Name
+  {98f26f59-261a-40b0-acce-341f742c0279}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {4b974c39-446c-4859-b4bc-fd157737dd53}, !- Handle
+  {a3dc4b25-055b-4468-bd14-09df7f6dbe11}, !- Construction Name
+  GlassDoor,                              !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Glazed Door,                            !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {954b500e-8a6e-4488-b7cd-89d07b12e82b}, !- Handle
+  Base_AllCZ_GlassCurbMountedSkylightU58 Material, !- Name
+  3.29339273784582,                       !- U-Factor {W/m2-K}
+  0.25,                                   !- Solar Heat Gain Coefficient
+  0.49;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {1636ed94-ea8a-4a85-9ae9-5404958f0e0f}, !- Handle
+  {954b500e-8a6e-4488-b7cd-89d07b12e82b}; !- Material Name
+
+OS:WindowMaterial:SimpleGlazingSystem,
+  {e50a1a91-9a4f-4874-9b39-b35569f9110c}, !- Handle
+  Base_AllCZ_GlassDeckMountedSkylightU46 Material, !- Name
+  2.6120011369122,                        !- U-Factor {W/m2-K}
+  0.25,                                   !- Solar Heat Gain Coefficient
+  0.49;                                   !- Visible Transmittance
+
+OS:StandardsInformation:Material,
+  {df3c03f1-8b7f-4a24-90fe-49f65f99a7dd}, !- Handle
+  {e50a1a91-9a4f-4874-9b39-b35569f9110c}; !- Material Name
+
+OS:Construction,
+  {a0306acd-f6c4-467e-a863-edc86c14a61c}, !- Handle
+  Base_AllCZ_GlassDeckMountedSkylightU46, !- Name
+  ,                                       !- Surface Rendering Name
+  {e50a1a91-9a4f-4874-9b39-b35569f9110c}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {782c11f2-3e35-45e5-8605-02b9c4eff862}, !- Handle
+  {a0306acd-f6c4-467e-a863-edc86c14a61c}, !- Construction Name
+  ExteriorWindow,                         !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Operable Window,                        !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
+OS:Construction,
+  {03c6b578-2214-44ff-b3a0-055dad97429f}, !- Handle
+  Base_AllCZ_GlassCurbMountedSkylightU58, !- Name
+  ,                                       !- Surface Rendering Name
+  {954b500e-8a6e-4488-b7cd-89d07b12e82b}; !- Layer 1
+
+OS:StandardsInformation:Construction,
+  {2f49bd4f-a87c-4679-a331-d30e9d0fbf22}, !- Handle
+  {03c6b578-2214-44ff-b3a0-055dad97429f}, !- Construction Name
+  ExteriorWindow,                         !- Intended Surface Type
+  ,                                       !- Standards Construction Type
+  ,                                       !- Perturbable Layer
+  ,                                       !- Perturbable Layer Type
+  ,                                       !- Other Perturbable Layer Type
+  ,                                       !- Construction Standard
+  ,                                       !- Construction Standard Source
+  Operable Window,                        !- Fenestration Type
+  Manufactured,                           !- Fenestration Assembly Context
+  Double Pane,                            !- Fenestration Number of Panes
+  Metal Framing;                          !- Fenestration Frame Type
+
