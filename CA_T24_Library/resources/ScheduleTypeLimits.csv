@@ -1,0 +1,19 @@
+Name,LowerLimitValue,UpperLimitValue,NumericType,UnitType
+Fraction,0,1,Continuous,
+OnOff,0,1,Continuous,Availability
+Temperature,,,Continuous,Temperature
+Dimensionless,,,Continuous,
+Dimensionless 1,-1,1,Continuous,
+Dimensionless 2,0,1,Continuous,Dimensionless
+ActivityLevel,0,,Continuous,ActivityLevel
+Capacity,0,,Continuous,Capacity
+ClothingInsulation,0,,Continuous,ClothingInsulation
+ControlMode,0,1,Discrete,ControlMode
+DeltaTemperature,,,Continuous,DeltaTemperature
+LinearPowerDensity,0,,Continuous,LinearPowerDensity
+MassFlowRate,0,,Continuous,MassFlowRate
+Percent,0,100,Continuous,Percent
+Pressure,,,Continuous,Pressure
+RotationsPerMinute,0,,Continuous,RotationsPerMinute
+Velocity,0,,Continuous,Velocity
+VolumetricFlowRate,0,,Continuous,VolumetricFlowRate
