@@ -180,9 +180,8 @@ space_type_hash.each do |spc|
     occ_sens = spc[:occsenshtrt]
     occ_lat = spc[:occlathtrt]
     occ_tot = occ_sens + occ_lat
-    sensible_fraction = occ_sens.to_f/occ_tot.to_f
+    sensible_fraction = occ_sens/occ_tot
     people_def.setSensibleHeatFraction(sensible_fraction)
-    #puts "sensible #{occ_sens} #{occ_lat} #{occ_tot} #{sensible_fraction}"
     activity_level_sch.setValue(OpenStudio.convert(occ_tot,"Btu/h","W").get)
     people.setActivityLevelSchedule(activity_level_sch) 
     ppl_dens = OpenStudio.convert(1000/spc[:occdens],"ft^2","m^2").get
