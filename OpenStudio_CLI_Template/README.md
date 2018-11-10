@@ -24,18 +24,15 @@ However, if the project has multiple baseline models, multiple weather files, or
 
 ## Setting Up The Analysis
   1. **Construct baseline OpenStudio models.**
-    
-    - If any OpenStudio measure requires selecting a construction, schedule, or other object in the model, add these in the baseline model.
+  - If any OpenStudio measure requires selecting a construction, schedule, or other object in the model, add these in the baseline model.
   2. **Create a directory containing:**
-    
-    - The *generate_workflows.rb* *run_workflows.rb* and *read_results.rb* ruby scripts.
-    - *files* directory that contains baseline *.osm* and *.epw* files.
-    - *measures* directory that contains all OpenStudio measures in the project.
-    - **All files and folders in the project should not contain whitespace in their names, e.g. *underscored_path/to/files/my_model.osm* not *whitespace path/to/files/my model.osm***.
+  - The *generate_workflows.rb* *run_workflows.rb* and *read_results.rb* ruby scripts.
+  - *files* directory that contains baseline *.osm* and *.epw* files.
+  - *measures* directory that contains all OpenStudio measures in the project.
+  - **All files and folders in the project should not contain whitespace in their names, e.g. *underscored_path/to/files/my_model.osm* not *whitespace path/to/files/my model.osm***.
   3. **Selecting, editing, writing, and testing measures**
-    
-    - Copy measures from BCL or add custom measures to the *mesaures* directory.
-    - Test each measure individually in the OpenStudio app and resolve errors.
+  - Copy measures from BCL or add custom measures to the *mesaures* directory.
+  - Test each measure individually in the OpenStudio app and resolve errors.
 
 ## Running The Analysis
 Run the following commands in command line.  Pressing tab in command line will autocomplete a filename in the current directory.
